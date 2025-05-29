@@ -1,6 +1,8 @@
 # Media Project
 
-This is a starter project using **Next.js 15**, styled with **Tailwind CSS** and components from **NextUI**. It's set up with environment variable support.
+This is the **Medeil Platform** project, built using **Next.js 15**, styled with **Tailwind CSS**, and leveraging **NextUI** for beautiful UI components.
+
+Medeil is a modern social network platform enabling users to share posts, engage with content, and connect with communities in real-time. The platform is designed for performance, accessibility, and scalability.
 
 ## 🚀 Features
 
