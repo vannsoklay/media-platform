@@ -78,18 +78,18 @@ Configuration file: `tailwind.config.js`
 
 ---
 
-## 🧩 UI Components with NextUI
+## 🧩 UI Components with HeroUI
 
-This project uses [NextUI](https://nextui.org/) for modern, accessible UI components.
+This project uses [HeroUI](https://heroui.org/) for modern, accessible UI components.
 
 Example usage:
 
 ```tsx
 'use client';
-import { Button } from '@nextui-org/react';
+import { Button } from '@heroui-org/react';
 
 export default function HomePage() {
-  return <Button color="primary">Hello NextUI</Button>;
+  return <Button color="primary">Hello HeroUI</Button>;
 }
 ```
 
