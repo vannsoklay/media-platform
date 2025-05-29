@@ -1,4 +1,4 @@
-# Next.js 15 Starter Project
+# Media Project
 
 This is a starter project using **Next.js 15**, styled with **Tailwind CSS** and components from **NextUI**. It's set up with environment variable support.
 
