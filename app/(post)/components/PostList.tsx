@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 import { addToast } from "@heroui/react";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import { AspectRatioType } from "@/types/posts";
 import { PostSkeleton } from "@/components/PostSkeleton";
 import { VoteService } from "@/services/vote";
 import _ from "lodash";
+import { useRouter } from "next/navigation";
 
 const PostList = ({
   author,
@@ -20,32 +21,64 @@ const PostList = ({
   author?: string;
   username?: string;
 }) => {
+  const router = useRouter();
   const { user } = useAuth();
+  const { getPosts, deletePost } = usePost();
   const [isOpen, setIsOpen] = useState<string | null>(null);
   const [isEdit, setIsEdit] = useState<string | null>(null);
   const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
   const [savedPosts, setSavedPosts] = useState<Set<string>>(new Set());
-  const [showComments, setShowComments] = useState<Set<string>>(new Set());
   const [imageAspectRatios, setImageAspectRatios] = useState<
     Map<string, Map<number, AspectRatioType>>
   >(new Map());
   const [showAspectSelector, setShowAspectSelector] = useState<Set<string>>(
     new Set()
   );
+  const scrollTimeout = useRef<number | null>(null);
 
   const filter = author ? { author } : username ? { username: username } : {};
 
   const {
     data,
-    loading,
+    isFetching,
     error,
-    hasMore,
-    deletePost,
+    hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-  } = usePost({ ...filter, isAuth: user ? true : false });
+  } = getPosts({ ...filter, isAuth: user ? true : false });
 
-  const posts = data ?? [];
+  useEffect(() => {
+    const handleScroll = () => {
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      scrollTimeout.current = window.setTimeout(() => {
+        const { scrollY, innerHeight } = window;
+        const { scrollHeight } = document.documentElement;
+        const scrollThreshold = 200;
+
+        if (
+          scrollY + innerHeight >= scrollHeight - scrollThreshold &&
+          hasNextPage &&
+          !isFetching &&
+          !isFetchingNextPage
+        ) {
+          fetchNextPage();
+        }
+      }, 100);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
+  }, [hasNextPage, isFetching, isFetchingNextPage, fetchNextPage]);
+
 
   const handleDelete = async (postId: string) => {
     try {
@@ -103,6 +136,15 @@ const PostList = ({
     }
 
     try {
+      setLikedPosts((prev) => {
+        const newSet = new Set(prev);
+        if (newSet.has(permalink)) {
+          newSet.delete(permalink);
+        } else {
+          newSet.add(permalink);
+        }
+        return newSet;
+      });
       await VoteService.create_or_remove({ permalink });
     } catch (error) {
       // Revert UI if API call fails
@@ -151,16 +193,8 @@ const PostList = ({
     });
   };
 
-  const toggleComments = (postId: string) => {
-    setShowComments((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(postId)) {
-        newSet.delete(postId);
-      } else {
-        newSet.add(postId);
-      }
-      return newSet;
-    });
+  const toggleComments = (permalink: string) => {
+    router.push(`/post/${permalink}`);
   };
 
   const toggleAspectSelector = (postId: string) => {
@@ -190,13 +224,15 @@ const PostList = ({
   };
 
   if (error) {
-    return <p className="text-red-500">{error}</p>;
+    return <p className="text-red-500">{error.message}</p>;
   }
+
+  console.log("data", data);
 
   return (
     <div className="max-w-sm sm:max-w-md lg:max-w-lg mx-auto bg-white">
       <PostForm isEdit={isEdit} setIsEdit={setIsEdit} />
-      {loading && posts.length === 0 ? (
+      {isFetching && data?.pages.flat().length === 0 ? (
         <div className="space-y-0 px-2">
           {[1, 2, 3].map((item) => (
             <PostSkeleton key={item} />
@@ -204,13 +240,13 @@ const PostList = ({
         </div>
       ) : (
         <InfiniteScroll
-          dataLength={posts.length}
+          dataLength={data?.pages.flat().length ?? 0}
           next={() => {
-            if (!isFetchingNextPage && hasMore) {
+            if (!isFetchingNextPage && hasNextPage) {
               fetchNextPage();
             }
           }}
-          hasMore={hasMore}
+          hasMore={hasNextPage}
           loader={
             <div className="space-y-0 px-2">
               {[1, 2, 3].map((item) => (
@@ -219,7 +255,7 @@ const PostList = ({
             </div>
           }
           endMessage={
-            posts.length > 0 && (
+            (data?.pages.flat() || []).length > 0 && (
               <div className="text-center py-8 text-gray-500 text-sm">
                 <p>You're all caught up! 🎉</p>
               </div>
@@ -227,7 +263,7 @@ const PostList = ({
           }
         >
           <div className="space-y-0 px-2">
-            {posts.map((post, index) => (
+            {data?.pages.flat().map((post, index) => (
               <div key={index}>
                 <PostItem
                   post={post}
@@ -236,7 +272,6 @@ const PostList = ({
                   isLiked={likedPosts.has(post.permalink)}
                   setLikedPosts={setLikedPosts}
                   isSaved={savedPosts.has(post.id)}
-                  showComments={showComments.has(post.id)}
                   showAspectSelector={showAspectSelector.has(post.id)}
                   imageAspectRatios={imageAspectRatios}
                   onMenuToggle={() => setIsOpen(post.id)}

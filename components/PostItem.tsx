@@ -14,7 +14,6 @@ interface PostItemProps {
   isLiked: boolean;
   isSaved: boolean;
   setLikedPosts: Dispatch<SetStateAction<Set<string>>>;
-  showComments: boolean;
   showAspectSelector: boolean;
   imageAspectRatios: Map<string, Map<number, AspectRatioType>>;
   onMenuToggle: (postId: string) => void;
@@ -38,7 +37,6 @@ export const PostItem: React.FC<PostItemProps> = ({
   isLiked,
   isSaved,
   setLikedPosts,
-  showComments,
   showAspectSelector,
   imageAspectRatios,
   onMenuToggle,
@@ -79,7 +77,7 @@ export const PostItem: React.FC<PostItemProps> = ({
         />
       )}
 
-      <PostMedia post={post} imageAspectRatios={imageAspectRatios} />
+      <PostMedia id={post?.id} mediaUrls={post?.media_urls} imageAspectRatios={imageAspectRatios} />
 
       <PostActions
         post={post}
@@ -94,8 +92,8 @@ export const PostItem: React.FC<PostItemProps> = ({
       <PostContent post={post} />
 
       <CommentsSection
-        isVisible={showComments}
-        onToggleVisibility={() => onToggleComments(post.id)}
+        totalComments={post.total_comments}
+        onToggleVisibility={() => onToggleComments(post.permalink)}
       />
     </div>
   );

@@ -1,8 +1,8 @@
-import api from "@/config/interceptor";
+import { api, apiBE } from "@/config/interceptor";
 import { handleError } from "@/utils/error";
 
 export const PostService = {
-    getAll: (offset: number, limit: number, username?: string, author?: string) => {
+    getAll: async (offset: number, limit: number, username?: string, author?: string) => {
         const params: Record<string, any> = { offset, limit };
         if (username) params.username = username;
         if (author) params.author = author;
@@ -10,8 +10,14 @@ export const PostService = {
         return api.get("/posts", { params }).catch(handleError);
     },
     getById: (id: string) =>
-        api.get(`/posts/${id}`).catch(handleError),
+        api.get(`/posts`, {
+            params: {
+                id
+            }
+        }).catch(handleError),
 
+    getByPermalink: async (permalink: string) =>
+        apiBE.get(`/posts/post-by-permalink/${permalink}`).catch(handleError),
     create: (values: any) =>
         api.post(`/posts`, values, {
             headers: {

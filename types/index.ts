@@ -27,3 +27,14 @@ export type RegisterForm = {
   username: string,
   password: string
 }
+
+
+// Define types for the comment data you get from useComment hook
+export interface CommentResult {
+  data: any[]; // Adjust this to your actual comment data type
+  loading: boolean;
+  error: string | null;
+  hasMore: boolean;
+  fetchNextPage: () => void;
+  isFetchingNextPage: boolean;
+}

@@ -8,10 +8,11 @@ import React, {
   useMemo,
 } from "react";
 import { addToast } from "@heroui/react";
+
 import { UserService } from "@/services/user";
 import { UserType } from "@/types/user";
 import { AuthContextType, LoginForm } from "@/types";
-import api from "@/config/interceptor";
+import { api } from "@/config/interceptor";
 import AuthModal from "@/components/modals/auth-modal";
 
 const AuthContext = createContext<AuthContextType | null>(null);

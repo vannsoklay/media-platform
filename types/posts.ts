@@ -13,6 +13,7 @@ export interface Post {
     media_urls?: string[];
     tags: string[];
     total_votes: number | 0;
+    total_comments: number | 0;
     voted_by_user: boolean;
     post_type: PostType;
     created_at?: string;
@@ -26,7 +27,7 @@ export interface PostPayload {
     media_urls: string[],
     tags: string[],
     post_type: "SocialMedia",
-  };
+};
 
 
 export interface AspectRatioOption {

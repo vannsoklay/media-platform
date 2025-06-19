@@ -1,4 +1,3 @@
-import PostList from "./components/PostList";
 import PostProvider from "./components/PostProvider";
 
 export default async function Home() {

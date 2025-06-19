@@ -30,12 +30,9 @@ interface Props {
   setIsEdit: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export default function PostForm({ username, isEdit, setIsEdit }: Props) {
+export default function PostForm({ isEdit, setIsEdit }: Props) {
   const { isPostModalOpen, setIsPostModalOpen } = useAuth();
-  const { createPost, editPost, getPostById } = usePost({
-    username,
-    isAuth: true,
-  });
+  const { createPost, editPost, getPostById } = usePost();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);

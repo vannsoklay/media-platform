@@ -1,4 +1,4 @@
-import api from "@/config/interceptor";
+import {api} from "@/config/interceptor";
 import { handleError } from "@/utils/error";
 
 export const ImageService = {
