@@ -1,19 +1,29 @@
 import React from "react";
-import { useComment } from "@/hooks/useComment";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { CommentItem } from "./CommentItem";
 import { addToast, Button, Form, Input } from "@heroui/react";
+import InfiniteScroll from "react-infinite-scroll-component";
+
+import { CommentItem } from "./CommentItem";
 import { CommentPayload } from "@/types/comment";
+import { useComment } from "@/hooks/useComment";
 
 interface CommentListProps {
   permalink: string;
 }
 
 export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
-  const { data, loading, error, hasMore, fetchNextPage, createComment } =
-    useComment({
-      permalink,
-    });
+  const formRef = React.useRef<HTMLFormElement>(null);
+  const {
+    data,
+    loading,
+    error,
+    hasMore,
+    fetchNextPage,
+    createComment,
+    editComment,
+    deleteComment,
+  } = useComment({
+    permalink,
+  });
 
   if (error) {
     return <p className="text-red-500 text-center py-4">{error}</p>;
@@ -35,8 +45,10 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
         parent_comment_id: null,
       };
 
+      console.log("payload", payload);
+
       await createComment({ payload });
-      
+      formRef.current?.reset();
     } catch (error: any) {
       const message =
         error?.message || "Failed to submit post. Please try again.";
@@ -60,6 +72,48 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
             />
           </svg>
         ),
+      });
+    }
+  };
+
+  const handleDelete = async (commentId: string) => {
+    try {
+      // Assuming deleteComment is a function that deletes a comment by ID
+      await deleteComment(commentId);
+      addToast({
+        title: "Success",
+        variant: "solid",
+        description: "Comment deleted successfully.",
+        color: "success",
+      });
+    } catch (error: any) {
+      addToast({
+        title: "Error",
+        variant: "solid",
+        description: error?.message || "Failed to delete comment.",
+        color: "danger",
+      });
+    }
+  };
+
+  const handleEdit = async (commentId: string, newContent: string) => {
+    try {
+      await editComment({
+        id: commentId,
+        payload: { content: newContent },
+      });
+      addToast({
+        title: "Success",
+        variant: "solid",
+        description: "Comment edited successfully.",
+        color: "success",
+      });
+    } catch (error: any) {
+      addToast({
+        title: "Error",
+        variant: "solid",
+        description: error?.message || "Failed to edit comment.",
+        color: "danger",
       });
     }
   };
@@ -91,13 +145,19 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
         >
           {data.map((comment, key) => (
             <div key={key}>
-              <CommentItem comment={comment} />
+              <CommentItem
+                comment={comment}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
             </div>
           ))}
         </div>
       </InfiniteScroll>
       <Form
+        ref={formRef}
         className="flex-1 text-sm bg-transparent border-none outline-none placeholder-gray-400"
+        onReset={() => {}}
         onSubmit={handleComment}
       >
         <Input

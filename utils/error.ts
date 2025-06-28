@@ -1,6 +1,5 @@
 // Error Handler
 export const handleError = (error: any) => {
-    console.log("error", error);
     throw error.response?.data || error.message || error.response?.data?.message || "Something went wrong. Please try again later.";
 };
 

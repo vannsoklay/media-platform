@@ -19,7 +19,7 @@ export const PostService = {
     getByPermalink: async (permalink: string) =>
         apiBE.get(`/posts/post-by-permalink/${permalink}`).catch(handleError),
     create: (values: any) =>
-        api.post(`/posts`, values, {
+        apiBE.post(`/posts`, values, {
             headers: {
                 "Content-Type": "application/json",
             },
