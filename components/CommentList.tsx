@@ -98,9 +98,11 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
 
   const handleEdit = async (commentId: string, newContent: string) => {
     try {
+      console.log("edit", commentId);
+
       await editComment({
         id: commentId,
-        payload: { content: newContent },
+        payload: { content: newContent, permalink: commentId },
       });
       addToast({
         title: "Success",
