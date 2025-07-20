@@ -2,13 +2,13 @@ import { ApihandleError } from "@/utils/error";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-const backend_url = "http://localhost:8443";
+const backend_url = process.env.NEXT_PUBLIC_GETAWAY_API_V1;
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
 
     try {
-        const { data } = await axios.post(`${backend_url}/api/v1/auth/login`, body, {
+        const { data } = await axios.post(`${backend_url}/auth/login`, body, {
             headers: {
                 'Content-Type': 'application/json',
             },

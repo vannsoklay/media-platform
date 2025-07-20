@@ -20,7 +20,7 @@ import {
 import _ from "lodash";
 
 import { usePost } from "@/hooks/usePost";
-import { Post, PostPayload } from "@/types/posts";
+import { PostPayload } from "@/types/posts";
 import { useAuth } from "@/contexts/useAuth";
 import { ImageService } from "@/services/image";
 
@@ -65,10 +65,10 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
           .filter(
             (word) =>
               word.length > 3 &&
-              !["this", "that", "with", "from", "your"].includes(word)
+              !["this", "that", "with", "from", "your"].includes(word),
           )
-          .slice(0, 5)
-      )
+          .slice(0, 5),
+      ),
     );
   };
 
@@ -116,6 +116,7 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
       selectedImages.map(async (image) => {
         try {
           const formData = new FormData();
+
           formData.append("image", image);
 
           const { data } = await ImageService.create(formData);
@@ -128,7 +129,7 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
         } catch (err) {
           failedImages.push(image.name);
         }
-      })
+      }),
     );
 
     if (failedImages.length > 0) {
@@ -193,15 +194,15 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
         color: "danger",
         icon: (
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.7em"
             height="1.7em"
             viewBox="0 0 512 512"
+            width="1.7em"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
               fill="#fff"
               fillRule="evenodd"
-              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
             />
           </svg>
         ),
