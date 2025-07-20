@@ -227,8 +227,6 @@ const PostList = ({
     return <p className="text-red-500">{error.message}</p>;
   }
 
-  console.log("data", data);
-
   return (
     <div className="max-w-sm sm:max-w-md lg:max-w-lg mx-auto bg-white">
       <PostForm isEdit={isEdit} setIsEdit={setIsEdit} />
