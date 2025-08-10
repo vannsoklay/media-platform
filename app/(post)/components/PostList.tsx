@@ -1,18 +1,19 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-
 import { addToast } from "@heroui/react";
 import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import _ from "lodash";
+import { useRouter } from "next/navigation";
+
 import PostForm from "./PostForm";
+
 import { usePost } from "@/hooks/usePost";
 import { useAuth } from "@/contexts/useAuth";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { PostItem } from "@/components/PostItem";
 import { AspectRatioType } from "@/types/posts";
 import { PostSkeleton } from "@/components/PostSkeleton";
 import { VoteService } from "@/services/vote";
-import _ from "lodash";
-import { useRouter } from "next/navigation";
 
 const PostList = ({
   author,
@@ -79,7 +80,6 @@ const PostList = ({
     };
   }, [hasNextPage, isFetching, isFetchingNextPage, fetchNextPage]);
 
-
   const handleDelete = async (postId: string) => {
     try {
       await deletePost(postId);
@@ -93,15 +93,15 @@ const PostList = ({
         color: "danger",
         icon: (
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.7em"
             height="1.7em"
             viewBox="0 0 512 512"
+            width="1.7em"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
               fill="#fff"
               fillRule="evenodd"
-              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
             />
           </svg>
         ),
@@ -119,30 +119,33 @@ const PostList = ({
         color: "warning",
         icon: (
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.7em"
             height="1.7em"
             viewBox="0 0 512 512"
+            width="1.7em"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
               fill="#fff"
               fillRule="evenodd"
-              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
             />
           </svg>
         ),
       });
+
       return;
     }
 
     try {
       setLikedPosts((prev) => {
         const newSet = new Set(prev);
+
         if (newSet.has(permalink)) {
           newSet.delete(permalink);
         } else {
           newSet.add(permalink);
         }
+
         return newSet;
       });
       await VoteService.create_or_remove({ permalink });
@@ -150,11 +153,13 @@ const PostList = ({
       // Revert UI if API call fails
       setLikedPosts((prev) => {
         const newSet = new Set(prev);
+
         if (newSet.has(permalink)) {
           newSet.delete(permalink);
         } else {
           newSet.add(permalink);
         }
+
         return newSet;
       });
 
@@ -165,15 +170,15 @@ const PostList = ({
         color: "danger",
         icon: (
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.7em"
             height="1.7em"
             viewBox="0 0 512 512"
+            width="1.7em"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
               fill="#fff"
               fillRule="evenodd"
-              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
             />
           </svg>
         ),
@@ -184,11 +189,13 @@ const PostList = ({
   const handleSave = (postId: string) => {
     setSavedPosts((prev) => {
       const newSet = new Set(prev);
+
       if (newSet.has(postId)) {
         newSet.delete(postId);
       } else {
         newSet.add(postId);
       }
+
       return newSet;
     });
   };
@@ -200,11 +207,13 @@ const PostList = ({
   const toggleAspectSelector = (postId: string) => {
     setShowAspectSelector((prev) => {
       const newSet = new Set(prev);
+
       if (newSet.has(postId)) {
         newSet.delete(postId);
       } else {
         newSet.add(postId);
       }
+
       return newSet;
     });
   };
@@ -217,8 +226,10 @@ const PostList = ({
     setImageAspectRatios((prev) => {
       const newMap = new Map(prev);
       const postRatios = newMap.get(postId) || new Map();
+
       postRatios.set(imageIndex, aspectRatio);
       newMap.set(postId, postRatios);
+
       return newMap;
     });
   };
@@ -239,11 +250,13 @@ const PostList = ({
       ) : (
         <InfiniteScroll
           dataLength={data?.pages.flat().length ?? 0}
-          next={() => {
-            if (!isFetchingNextPage && hasNextPage) {
-              fetchNextPage();
-            }
-          }}
+          endMessage={
+            (data?.pages.flat() || []).length > 0 && (
+              <div className="text-center py-8 text-gray-500 text-sm">
+                <p>You&#39;re all caught up! 🎉</p>
+              </div>
+            )
+          }
           hasMore={hasNextPage}
           loader={
             <div className="space-y-0 px-2">
@@ -252,34 +265,32 @@ const PostList = ({
               ))}
             </div>
           }
-          endMessage={
-            (data?.pages.flat() || []).length > 0 && (
-              <div className="text-center py-8 text-gray-500 text-sm">
-                <p>You're all caught up! 🎉</p>
-              </div>
-            )
-          }
+          next={() => {
+            if (!isFetchingNextPage && hasNextPage) {
+              fetchNextPage();
+            }
+          }}
         >
           <div className="space-y-0 px-2">
             {data?.pages.flat().map((post, index) => (
               <div key={index}>
                 <PostItem
-                  post={post}
                   currentUserId={user?.id}
-                  isMenuOpen={isOpen === post.id}
-                  isLiked={likedPosts.has(post.permalink)}
-                  setLikedPosts={setLikedPosts}
-                  isSaved={savedPosts.has(post.id)}
-                  showAspectSelector={showAspectSelector.has(post.id)}
                   imageAspectRatios={imageAspectRatios}
-                  onMenuToggle={() => setIsOpen(post.id)}
-                  onEdit={() => setIsEdit(post.id)}
+                  isLiked={likedPosts.has(post.permalink)}
+                  isMenuOpen={isOpen === post.id}
+                  isSaved={savedPosts.has(post.id)}
+                  post={post}
+                  setLikedPosts={setLikedPosts}
+                  showAspectSelector={showAspectSelector.has(post.id)}
+                  onAspectRatioChange={handleAspectRatioChange}
+                  onAspectRatioToggle={toggleAspectSelector}
                   onDelete={handleDelete}
+                  onEdit={() => setIsEdit(post.id)}
                   onLike={() => handleLike(post.permalink)}
+                  onMenuToggle={() => setIsOpen(post.id)}
                   onSave={() => handleSave(post.id)}
                   onToggleComments={toggleComments}
-                  onAspectRatioToggle={toggleAspectSelector}
-                  onAspectRatioChange={handleAspectRatioChange}
                 />
               </div>
             ))}

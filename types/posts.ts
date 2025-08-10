@@ -1,39 +1,45 @@
-import { AuthorInfo } from "./user";
 import { LucideIcon } from "lucide-react";
 
+import { AuthorInfo } from "./user";
+
 export type PostType = "SocialMedia" | "Blog";
-export type AspectRatioType = "original" | "square" | "portrait" | "landscape" | "story";
+export type AspectRatioType =
+  | "original"
+  | "square"
+  | "portrait"
+  | "landscape"
+  | "story";
 
 export interface Post {
-    id: string;
-    title: string;
-    permalink: string;
-    content: string;
-    author: AuthorInfo;
-    media_urls?: string[];
-    tags: string[];
-    total_votes: number | 0;
-    total_comments: number | 0;
-    voted_by_user: boolean;
-    post_type: PostType;
-    created_at?: string;
-    updated_at?: string;
-    deleted_at?: string;
+  id: string;
+  title: string;
+  permalink: string;
+  content: string;
+  author: AuthorInfo;
+  media_urls?: string[];
+  tags: string[];
+  total_votes: number | 0;
+  total_comments: number | 0;
+  voted_by_user: boolean;
+  followed_by_user: boolean;
+  post_type: PostType;
+  created_at?: string;
+  updated_at?: string;
+  deleted_at?: string;
 }
 
 export interface PostPayload {
-    title: string,
-    content: string,
-    media_urls: string[],
-    tags: string[],
-    post_type: "SocialMedia",
-};
-
+  title: string;
+  content: string;
+  media_urls: string[];
+  tags: string[];
+  post_type: "SocialMedia";
+}
 
 export interface AspectRatioOption {
-    key: AspectRatioType;
-    label: string;
-    icon: LucideIcon;
-    ratio: string;
-    objectFit: "contain" | "cover";
+  key: AspectRatioType;
+  label: string;
+  icon: LucideIcon;
+  ratio: string;
+  objectFit: "contain" | "cover";
 }

@@ -1,11 +1,15 @@
 import React, { Dispatch, SetStateAction } from "react";
+
 import { PostHeader } from "./PostHeader";
 import { AspectRatioSelector } from "./AspectRatioSelector";
 import { PostMedia } from "./PostMedia";
 import { PostActions } from "./PostActions";
 import { PostContent } from "./PostContent";
 import { CommentsSection } from "./CommentsSection";
+import { ButtonFollow } from "./ButtonFollow";
+
 import { AspectRatioType, Post } from "@/types/posts";
+import { useAuth } from "@/contexts/useAuth";
 
 interface PostItemProps {
   post: Post;
@@ -48,6 +52,7 @@ export const PostItem: React.FC<PostItemProps> = ({
   onAspectRatioToggle,
   onAspectRatioChange,
 }) => {
+  const { user } = useAuth();
   const hasMedia = Array.isArray(post.media_urls) && post.media_urls.length > 0;
 
   const handleCloseAspectSelector = () => {
@@ -57,32 +62,41 @@ export const PostItem: React.FC<PostItemProps> = ({
 
   return (
     <div className="bg-white border-b border-gray-100 py-8">
+      <ButtonFollow
+        followerId={user?.id}
+        followingId={post.author.id}
+        isFollow={post.followed_by_user}
+      />
       <PostHeader
-        post={post}
         currentUserId={currentUserId}
-        isMenuOpen={isMenuOpen}
-        onMenuToggle={onMenuToggle}
-        onEdit={onEdit}
-        onDelete={onDelete}
-        onAspectRatioToggle={onAspectRatioToggle}
         hasMedia={hasMedia}
+        isMenuOpen={isMenuOpen}
+        post={post}
+        onAspectRatioToggle={onAspectRatioToggle}
+        onDelete={onDelete}
+        onEdit={onEdit}
+        onMenuToggle={onMenuToggle}
       />
 
       {showAspectSelector && (
         <AspectRatioSelector
-          post={post}
           imageAspectRatios={imageAspectRatios}
+          post={post}
           onAspectRatioChange={onAspectRatioChange}
           onClose={handleCloseAspectSelector}
         />
       )}
 
-      <PostMedia id={post?.id} mediaUrls={post?.media_urls} imageAspectRatios={imageAspectRatios} />
+      <PostMedia
+        id={post?.id}
+        imageAspectRatios={imageAspectRatios}
+        mediaUrls={post?.media_urls}
+      />
 
       <PostActions
-        post={post}
         isLiked={isLiked}
         isSaved={isSaved}
+        post={post}
         setLikedPosts={setLikedPosts}
         onLike={onLike}
         onSave={onSave}

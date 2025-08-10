@@ -1,6 +1,4 @@
-import { Suspense } from "react";
 import { DetailProvider } from "./components/DetailProvider";
-import { CommentList } from "@/components/CommentList";
 
 export default async function PostDetail({
   params,

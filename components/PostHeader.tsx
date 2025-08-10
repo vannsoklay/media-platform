@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { getRelativeTimeString } from "@/utils/date";
 import { Post } from "@/types/posts";
+import Link from "next/link";
 
 interface PostHeaderProps {
   post: Post;
@@ -38,30 +39,32 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 }) => {
   return (
     <div className="flex items-center justify-between px-0.5 pb-4 py-2">
-      <div className="flex items-center gap-3">
-        <div className="relative">
-          <Avatar
-            radius="full"
-            size="sm"
-            src={post.author?.avatar || undefined}
-            name={post.author?.username?.charAt(0).toUpperCase() ?? "?"}
-            className="w-8 h-8 ring-2 ring-gradient-to-r from-purple-500 to-pink-500 ring-offset-2"
-          />
+      <Link href={`/${post?.author?.username}`}>
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <Avatar
+              radius="full"
+              size="sm"
+              src={post.author?.avatar || undefined}
+              name={post.author?.username?.charAt(0).toUpperCase() ?? "?"}
+              className="w-8 h-8 ring-2 ring-gradient-to-r from-purple-500 to-pink-500 ring-offset-2"
+            />
+          </div>
+          <div className="flex items-center gap-1">
+            <span className="font-semibold text-sm text-black">
+              {post.author?.username || "unknown"}
+            </span>
+            <span className="text-gray-500 text-sm">•</span>
+            <span className="text-gray-500 text-sm">
+              {getRelativeTimeString(new Date(post.created_at ?? ""))}
+            </span>
+            {new Date(post.updated_at ?? "") >
+              new Date(post.created_at ?? "") && (
+              <span className="text-gray-400 text-xs">• edited</span>
+            )}
+          </div>
         </div>
-        <div className="flex items-center gap-1">
-          <span className="font-semibold text-sm text-black">
-            {post.author?.username || "unknown"}
-          </span>
-          <span className="text-gray-500 text-sm">•</span>
-          <span className="text-gray-500 text-sm">
-            {getRelativeTimeString(new Date(post.created_at ?? ""))}
-          </span>
-          {new Date(post.updated_at ?? "") >
-            new Date(post.created_at ?? "") && (
-            <span className="text-gray-400 text-xs">• edited</span>
-          )}
-        </div>
-      </div>
+      </Link>
 
       <div className="flex items-center gap-1">
         {hasMedia && (
