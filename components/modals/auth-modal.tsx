@@ -8,6 +8,7 @@ import {
   Button,
   Input,
 } from "@heroui/react";
+
 import { useAuth } from "@/contexts/useAuth";
 import { LoginForm, RegisterForm } from "@/types";
 
@@ -65,8 +66,8 @@ export default function AuthModal() {
                 label="Password"
                 labelPlacement="outside"
                 name="password"
-                type="password"
                 placeholder="Enter your password"
+                type="password"
               />
             </ModalBody>
             <ModalFooter className="flex-col items-start gap-2">
@@ -89,10 +90,10 @@ export default function AuthModal() {
               <div className="w-full text-center text-sm text-default-500">
                 {mode === "login" ? (
                   <>
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <button
-                      type="button"
                       className="text-blue-500 underline"
+                      type="button"
                       onClick={() => {
                         setMode("register");
                         setMessage(null);
@@ -105,8 +106,8 @@ export default function AuthModal() {
                   <>
                     Already have an account?{" "}
                     <button
-                      type="button"
                       className="text-blue-500 underline"
+                      type="button"
                       onClick={() => {
                         setMode("login");
                         setMessage(null);

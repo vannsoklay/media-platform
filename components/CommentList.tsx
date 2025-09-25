@@ -46,8 +46,6 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
         parent_comment_id: null,
       };
 
-      console.log("payload", payload);
-
       await createComment({ payload });
       formRef.current?.reset();
     } catch (error: any) {
@@ -99,8 +97,6 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
 
   const handleEdit = async (commentId: string, newContent: string) => {
     try {
-      console.log("edit", commentId);
-
       await editComment({
         id: commentId,
         payload: { content: newContent, permalink: commentId },

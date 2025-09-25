@@ -59,6 +59,7 @@ const PostDetailSkeleton = () => (
 );
 
 const PostContent: React.FC<{ data: Post }> = ({ data }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [imageAspectRatios, setImageAspectRatios] = useState<
     Map<string, Map<number, AspectRatioType>>
   >(new Map());
