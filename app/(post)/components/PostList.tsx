@@ -33,7 +33,7 @@ const PostList = ({
     Map<string, Map<number, AspectRatioType>>
   >(new Map());
   const [showAspectSelector, setShowAspectSelector] = useState<Set<string>>(
-    new Set()
+    new Set(),
   );
   const scrollTimeout = useRef<number | null>(null);
 
@@ -84,7 +84,7 @@ const PostList = ({
     try {
       await deletePost(postId);
       setIsOpen(null);
-    } catch (error) {
+    } catch {
       addToast({
         title: "Invalid Delete Post",
         variant: "solid",
@@ -149,7 +149,7 @@ const PostList = ({
         return newSet;
       });
       await VoteService.create_or_remove({ permalink });
-    } catch (error) {
+    } catch {
       // Revert UI if API call fails
       setLikedPosts((prev) => {
         const newSet = new Set(prev);
@@ -221,7 +221,7 @@ const PostList = ({
   const handleAspectRatioChange = (
     postId: string,
     imageIndex: number,
-    aspectRatio: AspectRatioType
+    aspectRatio: AspectRatioType,
   ) => {
     setImageAspectRatios((prev) => {
       const newMap = new Map(prev);

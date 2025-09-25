@@ -2,6 +2,7 @@
 
 import { Button } from "@heroui/button";
 import { useCallback } from "react";
+import { addToast } from "@heroui/react";
 
 import { useFollow } from "@/hooks/useFollow";
 
@@ -15,9 +16,6 @@ export const ButtonFollow = ({
   isFollow: boolean;
 }) => {
   const { toggleFollow } = useFollow();
-  // const { useFollowStatus } = useFollow();
-
-  // const { data: follow } = useFollowStatus(followerId ?? "", followingId ?? "");
 
   const handleFollow = useCallback(async () => {
     try {
@@ -27,14 +25,21 @@ export const ButtonFollow = ({
       };
 
       await toggleFollow({ payload })
-        .then((res) => {
-          console.log("res", res);
+        .then((res: any) => {
+          addToast({
+            description: res.message,
+            color: "success",
+          });
         })
         .catch((e) => {
-          console.log("e", e);
+          throw Error(e.message);
         });
-    } catch (e) {
-      console.log("e: ", e);
+    } catch (e: any) {
+      addToast({
+        title: "Error",
+        description: e.message,
+        color: "danger",
+      });
     }
   }, [followingId]);
 

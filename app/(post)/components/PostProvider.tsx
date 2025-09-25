@@ -1,9 +1,11 @@
 "use client";
-import { useAuth } from "@/contexts/useAuth";
 import PostList from "./PostList";
+
+import { useAuth } from "@/contexts/useAuth";
 
 export default function PostProvider() {
   const { loading, user } = useAuth();
+
   return loading ? (
     <div>loading...</div>
   ) : user ? (

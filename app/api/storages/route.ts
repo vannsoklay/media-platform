@@ -44,8 +44,6 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    console.log("data", data);
-
     return NextResponse.json(
       {
         message: "File uploaded successfully",

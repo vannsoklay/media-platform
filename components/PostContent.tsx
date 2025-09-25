@@ -1,5 +1,6 @@
-import { Post } from "@/types/posts";
 import React from "react";
+
+import { Post } from "@/types/posts";
 
 interface PostContentProps {
   post: Post;

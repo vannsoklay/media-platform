@@ -1,7 +1,4 @@
 import React from "react";
-import { Avatar } from "@heroui/react";
-import { Heart, Smile } from "lucide-react";
-import { CommentList } from "./CommentList";
 
 interface CommentsSectionProps {
   totalComments: number;

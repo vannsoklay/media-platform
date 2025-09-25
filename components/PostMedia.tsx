@@ -1,15 +1,20 @@
 import React from "react";
 import { Image } from "@heroui/react";
-import { AspectRatioType, Post } from "@/types/posts";
+
+import { AspectRatioType } from "@/types/posts";
 import { aspectRatioOptions } from "@/constants/aspectRatio";
 
 interface PostMediaProps {
   id: string;
-  mediaUrls?: string[]; 
+  mediaUrls?: string[];
   imageAspectRatios: Map<string, Map<number, AspectRatioType>>;
 }
 
-export const PostMedia: React.FC<PostMediaProps> = ({ id, mediaUrls, imageAspectRatios }) => {
+export const PostMedia: React.FC<PostMediaProps> = ({
+  id,
+  mediaUrls,
+  imageAspectRatios,
+}) => {
   const getImageStyle = (postId: string, imageIndex = 0) => {
     const postRatios = imageAspectRatios.get(postId);
     const selectedRatio = postRatios?.get(imageIndex) || "square";
@@ -63,15 +68,12 @@ export const PostMedia: React.FC<PostMediaProps> = ({ id, mediaUrls, imageAspect
     return (
       <div className="relative">
         {mediaUrls.length === 1 ? (
-          <div
-            className="relative w-full"
-            style={getContainerStyle(id, 0)}
-          >
+          <div className="relative w-full" style={getContainerStyle(id, 0)}>
             <Image
               alt="media"
               className="w-full h-full"
-              src={mediaUrls[0] || "/placeholder.svg"}
               radius="none"
+              src={mediaUrls[0] || "/placeholder.svg"}
               style={getImageStyle(id, 0)}
             />
           </div>
@@ -86,8 +88,8 @@ export const PostMedia: React.FC<PostMediaProps> = ({ id, mediaUrls, imageAspect
                 <Image
                   alt="media"
                   className="w-full h-full"
-                  src={media || "/placeholder.svg"}
                   radius="none"
+                  src={media || "/placeholder.svg"}
                   style={getImageStyle(id, index)}
                 />
               </div>
@@ -95,15 +97,12 @@ export const PostMedia: React.FC<PostMediaProps> = ({ id, mediaUrls, imageAspect
           </div>
         ) : mediaUrls.length === 3 ? (
           <div className="grid grid-cols-2 gap-0.5">
-            <div
-              className="relative"
-              style={getContainerStyle(id, 0)}
-            >
+            <div className="relative" style={getContainerStyle(id, 0)}>
               <Image
                 alt="media"
                 className="w-full h-full"
-                src={mediaUrls[0] || "/placeholder.svg"}
                 radius="none"
+                src={mediaUrls[0] || "/placeholder.svg"}
                 style={getImageStyle(id, 0)}
               />
             </div>
@@ -117,8 +116,8 @@ export const PostMedia: React.FC<PostMediaProps> = ({ id, mediaUrls, imageAspect
                   <Image
                     alt="media"
                     className="w-full h-full"
-                    src={media || "/placeholder.svg"}
                     radius="none"
+                    src={media || "/placeholder.svg"}
                     style={getImageStyle(id, index + 1)}
                   />
                 </div>
@@ -127,40 +126,31 @@ export const PostMedia: React.FC<PostMediaProps> = ({ id, mediaUrls, imageAspect
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-0.5">
-            <div
-              className="relative"
-              style={getContainerStyle(id, 0)}
-            >
+            <div className="relative" style={getContainerStyle(id, 0)}>
               <Image
                 alt="media"
                 className="w-full h-full"
-                src={mediaUrls[0] || "/placeholder.svg"}
                 radius="none"
+                src={mediaUrls[0] || "/placeholder.svg"}
                 style={getImageStyle(id, 0)}
               />
             </div>
             <div className="grid grid-rows-2 gap-0.5">
-              <div
-                className="relative"
-                style={getContainerStyle(id, 1)}
-              >
+              <div className="relative" style={getContainerStyle(id, 1)}>
                 <Image
                   alt="media"
                   className="w-full h-full"
-                  src={mediaUrls[1] || "/placeholder.svg"}
                   radius="none"
+                  src={mediaUrls[1] || "/placeholder.svg"}
                   style={getImageStyle(id, 1)}
                 />
               </div>
-              <div
-                className="relative"
-                style={getContainerStyle(id, 2)}
-              >
+              <div className="relative" style={getContainerStyle(id, 2)}>
                 <Image
                   alt="media"
                   className="w-full h-full"
-                  src={mediaUrls[2] || "/placeholder.svg"}
                   radius="none"
+                  src={mediaUrls[2] || "/placeholder.svg"}
                   style={getImageStyle(id, 2)}
                 />
                 {mediaUrls.length > 4 && (
@@ -192,15 +182,12 @@ export const PostMedia: React.FC<PostMediaProps> = ({ id, mediaUrls, imageAspect
 
   if (mediaUrls) {
     return (
-      <div
-        className="relative w-full"
-        style={getContainerStyle(id, 1)}
-      >
+      <div className="relative w-full" style={getContainerStyle(id, 1)}>
         <Image
           alt="image"
           className="w-full h-full"
-          src={mediaUrls[0] || "/placeholder.svg"}
           radius="none"
+          src={mediaUrls[0] || "/placeholder.svg"}
           style={getImageStyle(id, 1)}
         />
       </div>

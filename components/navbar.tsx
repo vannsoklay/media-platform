@@ -7,10 +7,11 @@ import {
   NavbarItem,
 } from "@heroui/navbar";
 import { Button } from "@heroui/button";
-import { Avatar, toast } from "@heroui/react";
-import { useAuth } from "@/contexts/useAuth";
+import { Avatar } from "@heroui/react";
 import _ from "lodash";
 import Link from "next/link";
+
+import { useAuth } from "@/contexts/useAuth";
 
 export const Navbar = () => {
   const {
@@ -27,7 +28,7 @@ export const Navbar = () => {
       {/* Navbar left side - brand */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand>
-          <Link href="/" className="flex items-center gap-2">
+          <Link className="flex items-center gap-2" href="/">
             Hello World
           </Link>
         </NavbarBrand>
@@ -44,10 +45,10 @@ export const Navbar = () => {
           {!loading && error && (
             <>
               <Button
-                onPress={() => setIsLoginModalOpen(true)}
                 color="primary"
                 href="#"
                 variant="flat"
+                onPress={() => setIsLoginModalOpen(true)}
               >
                 Sign In
               </Button>
@@ -59,9 +60,9 @@ export const Navbar = () => {
             (!_.isEmpty(user) ? (
               <>
                 <Button
-                  onPress={() => setIsPostModalOpen(true)}
                   color="primary"
                   variant="flat"
+                  onPress={() => setIsPostModalOpen(true)}
                 >
                   Post
                 </Button>
@@ -72,10 +73,10 @@ export const Navbar = () => {
                   />
                 </Link>
                 <Button
-                  onPress={logout}
                   color="primary"
                   href="#"
                   variant="flat"
+                  onPress={logout}
                 >
                   Logout
                 </Button>
@@ -83,10 +84,10 @@ export const Navbar = () => {
             ) : (
               <>
                 <Button
-                  onPress={() => setIsLoginModalOpen(true)}
                   color="primary"
                   href="#"
                   variant="flat"
+                  onPress={() => setIsLoginModalOpen(true)}
                 >
                   Sign In
                 </Button>

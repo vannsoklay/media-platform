@@ -12,9 +12,9 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  Input,
   Textarea,
 } from "@heroui/react";
+
 import { getRelativeTimeString } from "@/utils/date";
 import { Comment } from "@/types/comment";
 import { useAuth } from "@/contexts/useAuth";
@@ -64,11 +64,11 @@ export const CommentItem: React.FC<CommentItemProps> = ({
         <Link href={`/profile/${comment.author.username}`}>
           {comment.author.avatar ? (
             <Image
-              src={comment.author.avatar}
               alt={comment.author.username}
-              width={32}
-              height={32}
               className="rounded-full object-cover w-8 h-8"
+              height={32}
+              src={comment.author.avatar}
+              width={32}
             />
           ) : (
             <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center text-sm font-semibold text-gray-600">
@@ -80,8 +80,8 @@ export const CommentItem: React.FC<CommentItemProps> = ({
       <div className="flex-grow">
         <div className="flex items-baseline space-x-1">
           <Link
-            href={`/${comment.author.username}`}
             className="font-semibold text-sm text-gray-800 hover:underline"
+            href={`/${comment.author.username}`}
           >
             {comment.author.username}
             {comment.author.is_verified && (
@@ -103,10 +103,10 @@ export const CommentItem: React.FC<CommentItemProps> = ({
             <PopoverTrigger>
               <Button
                 isIconOnly
+                aria-label="Comment actions"
+                className="opacity-0 group-hover:opacity-100 transition"
                 size="sm"
                 variant="light"
-                className="opacity-0 group-hover:opacity-100 transition"
-                aria-label="Comment actions"
               >
                 ⋮
               </Button>
@@ -114,17 +114,17 @@ export const CommentItem: React.FC<CommentItemProps> = ({
             <PopoverContent className="p-0 w-36">
               <Button
                 fullWidth
-                variant="light"
                 className="justify-start rounded-none"
+                variant="light"
                 onPress={onEditOpen}
               >
                 Edit
               </Button>
               <Button
                 fullWidth
-                variant="light"
-                color="danger"
                 className="justify-start rounded-none"
+                color="danger"
+                variant="light"
                 onPress={onDeleteOpen}
               >
                 Delete
@@ -159,12 +159,11 @@ export const CommentItem: React.FC<CommentItemProps> = ({
           <form onSubmit={handleEdit}>
             <ModalBody>
               <Textarea
-                value={editValue}
-                onChange={(e) => setEditValue(e.target.value)}
-                minRows={3}
                 required
                 className="w-full"
-                autoFocus
+                minRows={3}
+                value={editValue}
+                onChange={(e) => setEditValue(e.target.value)}
               />
             </ModalBody>
             <ModalFooter>

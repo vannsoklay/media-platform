@@ -3,6 +3,7 @@ import { addToast, Button, Form, Input } from "@heroui/react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import { CommentItem } from "./CommentItem";
+
 import { CommentPayload } from "@/types/comment";
 import { useComment } from "@/hooks/useComment";
 
@@ -60,15 +61,15 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
         color: "danger",
         icon: (
           <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="1.7em"
             height="1.7em"
             viewBox="0 0 512 512"
+            width="1.7em"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <path
+              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
               fill="#fff"
               fillRule="evenodd"
-              d="M256 42.667c117.803 0 213.334 95.53 213.334 213.333S373.803 469.334 256 469.334S42.667 373.803 42.667 256S138.197 42.667 256 42.667m48.918 134.25L256 225.836l-48.917-48.917l-30.165 30.165L225.835 256l-48.917 48.918l30.165 30.165L256 286.166l48.918 48.917l30.165-30.165L286.166 256l48.917-48.917z"
             />
           </svg>
         ),
@@ -129,9 +130,6 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
       )}
       <InfiniteScroll
         dataLength={data.length}
-        next={fetchNextPage}
-        hasMore={hasMore}
-        loader={<LoadingIndicator />}
         endMessage={
           data.length > 0 && (
             <p className="text-center text-gray-500 text-sm py-2">
@@ -139,11 +137,14 @@ export const CommentList: React.FC<CommentListProps> = ({ permalink }) => {
             </p>
           )
         }
+        hasMore={hasMore}
+        loader={<LoadingIndicator />}
+        next={fetchNextPage}
         scrollableTarget={`scrollableComments-${permalink}`}
       >
         <div
-          id={`scrollableComments-${permalink}`}
           className="max-h-96 overflow-y-auto custom-scrollbar"
+          id={`scrollableComments-${permalink}`}
         >
           {data.map((comment, key) => (
             <div key={key}>

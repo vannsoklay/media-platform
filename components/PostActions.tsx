@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { Heart, MessageCircle, Send, Bookmark } from "lucide-react";
+
 import { Post } from "@/types/posts";
 
 interface PostActionsProps {
@@ -38,18 +39,18 @@ export const PostActions: React.FC<PostActionsProps> = ({
             onClick={() => onLike(post.permalink)}
           >
             <Heart
-              size={24}
               className={isLiked ? "text-red-500 fill-red-500" : "text-black"}
+              size={24}
             />
           </button>
           <button
             className="p-0 m-0 bg-transparent border-none outline-none cursor-pointer"
             onClick={() => onToggleComments(post.permalink)}
           >
-            <MessageCircle size={24} className="text-black" />
+            <MessageCircle className="text-black" size={24} />
           </button>
           <button className="p-0 m-0 bg-transparent border-none outline-none cursor-pointer">
-            <Send size={24} className="text-black" />
+            <Send className="text-black" size={24} />
           </button>
         </div>
         <button
@@ -57,8 +58,8 @@ export const PostActions: React.FC<PostActionsProps> = ({
           onClick={() => onSave(post.permalink)}
         >
           <Bookmark
-            size={24}
             className={isSaved ? "text-black fill-black" : "text-black"}
+            size={24}
           />
         </button>
       </div>

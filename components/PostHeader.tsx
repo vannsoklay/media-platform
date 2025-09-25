@@ -12,9 +12,10 @@ import {
   Trash2,
   RatioIcon as AspectRatio,
 } from "lucide-react";
+import Link from "next/link";
+
 import { getRelativeTimeString } from "@/utils/date";
 import { Post } from "@/types/posts";
-import Link from "next/link";
 
 interface PostHeaderProps {
   post: Post;
@@ -43,11 +44,11 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
         <div className="flex items-center gap-3">
           <div className="relative">
             <Avatar
+              className="w-8 h-8 ring-2 ring-gradient-to-r from-purple-500 to-pink-500 ring-offset-2"
+              name={post.author?.username?.charAt(0).toUpperCase() ?? "?"}
               radius="full"
               size="sm"
               src={post.author?.avatar || undefined}
-              name={post.author?.username?.charAt(0).toUpperCase() ?? "?"}
-              className="w-8 h-8 ring-2 ring-gradient-to-r from-purple-500 to-pink-500 ring-offset-2"
             />
           </div>
           <div className="flex items-center gap-1">
@@ -70,9 +71,9 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
         {hasMedia && (
           <Button
             isIconOnly
+            className="text-gray-500 hover:text-gray-700"
             size="sm"
             variant="light"
-            className="text-gray-500 hover:text-gray-700"
             onPress={() => onAspectRatioToggle(post.id)}
           >
             <AspectRatio size={16} />
@@ -89,9 +90,9 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             <PopoverTrigger onClick={() => onMenuToggle(post.id)}>
               <Button
                 isIconOnly
+                className="text-black"
                 size="sm"
                 variant="light"
-                className="text-black"
               >
                 <MoreHorizontal size={16} />
               </Button>
@@ -99,19 +100,19 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             <PopoverContent>
               <div className="px-1 py-2 min-w-32">
                 <Button
-                  size="sm"
-                  variant="light"
                   className="w-full justify-start text-left"
+                  size="sm"
                   startContent={<Pencil size={14} />}
+                  variant="light"
                   onPress={() => onEdit(post.id)}
                 >
                   Edit
                 </Button>
                 <Button
-                  size="sm"
-                  variant="light"
                   className="w-full justify-start text-left text-red-600"
+                  size="sm"
                   startContent={<Trash2 size={14} />}
+                  variant="light"
                   onPress={() => onDelete(post.id)}
                 >
                   Delete
@@ -120,7 +121,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
             </PopoverContent>
           </Popover>
         ) : (
-          <Button isIconOnly size="sm" variant="light" className="text-black">
+          <Button isIconOnly className="text-black" size="sm" variant="light">
             <MoreHorizontal size={16} />
           </Button>
         )}

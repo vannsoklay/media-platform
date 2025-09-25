@@ -126,7 +126,7 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
           }
 
           uploadedUrls.push(data.fileUrl);
-        } catch (err) {
+        } catch {
           failedImages.push(image.name);
         }
       }),
@@ -296,9 +296,7 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
               </div>
 
               <div className="space-y-2 mt-6">
-                <label className="text-sm font-medium">
-                  Auto-generated Tags
-                </label>
+                <p className="text-sm font-medium">Auto-generated Tags</p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {tags.length > 0 ? (
                     tags.map((tag, index) => (

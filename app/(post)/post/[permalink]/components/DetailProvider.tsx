@@ -1,17 +1,36 @@
-"use client"
+"use client";
 
-import { CommentList } from "@/components/CommentList"
-import { usePost } from "@/hooks/usePost"
-import type React from "react"
-import { Suspense, useState } from "react"
-import { Card, CardHeader, CardBody, Button, Chip, Divider, Skeleton, Image, User } from "@heroui/react"
-import { Heart, MessageCircle, Share2, Bookmark, MoreHorizontal, Calendar, Tag } from "lucide-react"
-import { getRelativeTimeString } from "@/utils/date"
-import { PostMedia } from "@/components/PostMedia"
-import { AspectRatioType, Post } from "@/types/posts"
+import type React from "react";
+
+import { Suspense, useState } from "react";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Button,
+  Chip,
+  Divider,
+  Skeleton,
+  User,
+} from "@heroui/react";
+import {
+  Heart,
+  MessageCircle,
+  Share2,
+  Bookmark,
+  MoreHorizontal,
+  Calendar,
+  Tag,
+} from "lucide-react";
+
+import { usePost } from "@/hooks/usePost";
+import { CommentList } from "@/components/CommentList";
+import { getRelativeTimeString } from "@/utils/date";
+import { PostMedia } from "@/components/PostMedia";
+import { AspectRatioType, Post } from "@/types/posts";
 
 interface DetailProps {
-  permalink: string
+  permalink: string;
 }
 
 const PostDetailSkeleton = () => (
@@ -37,7 +56,7 @@ const PostDetailSkeleton = () => (
       </div>
     </CardBody>
   </Card>
-)
+);
 
 const PostContent: React.FC<{ data: Post }> = ({ data }) => {
   const [imageAspectRatios, setImageAspectRatios] = useState<
@@ -46,37 +65,42 @@ const PostContent: React.FC<{ data: Post }> = ({ data }) => {
 
   const formatDate = (dateString: string) => {
     try {
-      return getRelativeTimeString(new Date(dateString))
+      return getRelativeTimeString(new Date(dateString));
     } catch {
-      return "Unknown time"
+      return "Unknown time";
     }
-  }
+  };
 
   const getAuthorInitials = (username: string) => {
-    return `${username.charAt(0).toUpperCase()}`
-  }
+    return `${username.charAt(0).toUpperCase()}`;
+  };
 
   return (
-    <Card shadow="none" className="p-0">
+    <Card className="p-0" shadow="none">
       <CardHeader className="justify-between p-0">
         <div className="flex gap-3 w-full">
           <User
-            name={data.author.username || "Unknown User"}
-            description={
-              <div className="flex items-center gap-2 text-small">
-                <Calendar size={12} />
-                <span>{formatDate(data.created_at ?? '')}</span>
-              </div>
-            }
             avatarProps={{
               src: data.author.avatar || "",
               name: getAuthorInitials(data.author.username),
               size: "md",
               className: "border-2 border-divider",
             }}
+            description={
+              <div className="flex items-center gap-2 text-small">
+                <Calendar size={12} />
+                <span>{formatDate(data.created_at ?? "")}</span>
+              </div>
+            }
+            name={data.author.username || "Unknown User"}
           />
           <div className="flex items-center gap-2 ml-auto">
-            <Button isIconOnly size="sm" variant="light" className="text-default-400">
+            <Button
+              isIconOnly
+              className="text-default-400"
+              size="sm"
+              variant="light"
+            >
               <MoreHorizontal size={16} />
             </Button>
           </div>
@@ -90,13 +114,23 @@ const PostContent: React.FC<{ data: Post }> = ({ data }) => {
             </div>
           )}
 
-          <PostMedia id={data?.id} mediaUrls={data?.media_urls} imageAspectRatios={imageAspectRatios} />
+          <PostMedia
+            id={data?.id}
+            imageAspectRatios={imageAspectRatios}
+            mediaUrls={data?.media_urls}
+          />
 
           {data.tags && data.tags.length > 0 && (
             <div className="flex items-center gap-2 flex-wrap">
-              <Tag size={16} className="text-default-400" />
+              <Tag className="text-default-400" size={16} />
               {data.tags.map((tag, index) => (
-                <Chip key={index} size="sm" variant="bordered" className="text-tiny" startContent="#">
+                <Chip
+                  key={index}
+                  className="text-tiny"
+                  size="sm"
+                  startContent="#"
+                  variant="bordered"
+                >
                   {tag}
                 </Chip>
               ))}
@@ -108,35 +142,35 @@ const PostContent: React.FC<{ data: Post }> = ({ data }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <Button
-                size="sm"
-                variant="light"
-                startContent={<Heart size={16} />}
                 className="text-default-500 hover:text-danger transition-colors"
+                size="sm"
+                startContent={<Heart size={16} />}
+                variant="light"
               >
                 {data?.total_votes} Like
               </Button>
               <Button
-                size="sm"
-                variant="light"
-                startContent={<MessageCircle size={16} />}
                 className="text-default-500 hover:text-primary transition-colors"
+                size="sm"
+                startContent={<MessageCircle size={16} />}
+                variant="light"
               >
                 Comment
               </Button>
               <Button
-                size="sm"
-                variant="light"
-                startContent={<Share2 size={16} />}
                 className="text-default-500 hover:text-success transition-colors"
+                size="sm"
+                startContent={<Share2 size={16} />}
+                variant="light"
               >
                 Share
               </Button>
             </div>
             <Button
               isIconOnly
+              className="text-default-500 hover:text-warning transition-colors"
               size="sm"
               variant="light"
-              className="text-default-500 hover:text-warning transition-colors"
             >
               <Bookmark size={16} />
             </Button>
@@ -144,8 +178,8 @@ const PostContent: React.FC<{ data: Post }> = ({ data }) => {
         </div>
       </CardBody>
     </Card>
-  )
-}
+  );
+};
 
 const CommentsSkeleton = () => (
   <Card className="w-full max-w-2xl mx-auto">
@@ -164,11 +198,11 @@ const CommentsSkeleton = () => (
       ))}
     </CardBody>
   </Card>
-)
+);
 
 export const DetailProvider: React.FC<DetailProps> = ({ permalink }) => {
-  const { getPostByPermalink } = usePost()
-  const { data } = getPostByPermalink(permalink)
+  const { getPostByPermalink } = usePost();
+  const { data } = getPostByPermalink(permalink);
 
   return (
     <div className="min-h-screen bg-background py-6 px-4">
@@ -184,5 +218,5 @@ export const DetailProvider: React.FC<DetailProps> = ({ permalink }) => {
         </Suspense>
       </div>
     </div>
-  )
-}
+  );
+};

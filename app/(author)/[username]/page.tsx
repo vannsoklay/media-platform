@@ -1,4 +1,5 @@
-import PostList from "@/app/(post)/components/PostList";
+import ProfileHero from "@/components/ProfileHero";
+import TabProfileSection from "@/components/TabProfileSection";
 
 export default async function AuthorHome({
   params,
@@ -12,7 +13,9 @@ export default async function AuthorHome({
     <section className="flex flex-col items-center justify-center gap-4 w-full">
       <div className="w-full max-w-2xl space-y-4">
         Author Posts for {username}
-        <PostList author={username} />
+        <ProfileHero username={username} />
+        <TabProfileSection />
+        {/* <PostList author={username} /> */}
       </div>
     </section>
   );

@@ -6,9 +6,10 @@ export const PostService = {
     offset: number,
     limit: number,
     username?: string,
-    author?: string
+    author?: string,
   ) => {
     const params: Record<string, any> = { offset, limit };
+
     if (username) params.username = username;
     if (author) params.author = author;
 

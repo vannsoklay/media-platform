@@ -2,8 +2,10 @@ import { apiBE } from "@/config/interceptor";
 import { handleError } from "@/utils/error";
 
 interface Params {
-  follower_id: string;
-  following_id: string;
+  follower_id?: string;
+  following_id?: string;
+  limit?: number;
+  skip?: number;
 }
 
 export const FollowToggleService = {
@@ -12,7 +14,31 @@ export const FollowToggleService = {
 };
 
 export const FollowStatus = {
-  followByUser: (params: Params) => {
-    return apiBE.get("/follow/status", { params }).catch(handleError);
+  followByUser: async (params: Params) => {
+    try {
+      return await apiBE.get("/follow/status", { params });
+    } catch (error) {
+      return handleError(error);
+    }
+  },
+};
+
+export const Follower = {
+  follower: async (params: Params) => {
+    try {
+      return await apiBE.get("/follow/followers", { params });
+    } catch (error) {
+      return handleError(error);
+    }
+  },
+};
+
+export const Following = {
+  following: async (params: Params) => {
+    try {
+      return await apiBE.get("/follow/following", { params });
+    } catch (error) {
+      return handleError(error);
+    }
   },
 };

@@ -30,7 +30,7 @@ interface PostItemProps {
   onAspectRatioChange: (
     postId: string,
     imageIndex: number,
-    aspectRatio: AspectRatioType
+    aspectRatio: AspectRatioType,
   ) => void;
 }
 
