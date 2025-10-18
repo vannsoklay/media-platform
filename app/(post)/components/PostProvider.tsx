@@ -4,13 +4,7 @@ import PostList from "./PostList";
 import { useAuth } from "@/contexts/useAuth";
 
 export default function PostProvider() {
-  const { loading, user } = useAuth();
+  const { loading } = useAuth();
 
-  return loading ? (
-    <div>loading...</div>
-  ) : user ? (
-    <PostList username={user.username} />
-  ) : (
-    <PostList />
-  );
+  return loading ? <div>loading...</div> : <PostList isPrivate={true} />;
 }

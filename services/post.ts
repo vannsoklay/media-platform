@@ -6,12 +6,12 @@ export const PostService = {
     offset: number,
     limit: number,
     username?: string,
-    author?: string,
+    current_user_id?: string | null,
   ) => {
-    const params: Record<string, any> = { offset, limit };
+    const params: Record<string, any> = { offset, limit, current_user_id };
 
     if (username) params.username = username;
-    if (author) params.author = author;
+    // params.current_user_id = current_user_id;
 
     return api.get("/posts", { params }).catch(handleError);
   },

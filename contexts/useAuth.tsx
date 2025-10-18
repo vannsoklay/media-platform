@@ -156,7 +156,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoginModalOpen,
       error,
     }),
-    [user, loading, isPostModalOpen, isLoginModalOpen, error, login, logout]
+    [user, loading, isPostModalOpen, isLoginModalOpen, error, login, logout],
   );
 
   return (

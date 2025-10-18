@@ -7,24 +7,16 @@ const backend_url = process.env.NEXT_PUBLIC_GETAWAY_API_V1;
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-
-    const skip = searchParams.get("skip") ?? "0";
-    const limit = searchParams.get("limit") ?? "10";
-    const username = searchParams.get("username") ?? null;
+    const username = searchParams.get("username");
     const current_user_id = searchParams.get("current_user_id") ?? null;
 
-    const token = request.headers.get("Authorization");
+    const endpoint = `/user/detail`;
 
-    const url = `${backend_url}/posts/all`;
-
-    const response = await axios.get(url, {
+    const response = await axios.get(`${backend_url}${endpoint}`, {
       params: {
-        skip,
-        limit,
         username,
         current_user_id,
       },
-      headers: token ? { Authorization: token } : {},
     });
 
     return new Response(JSON.stringify(response.data), {

@@ -1,41 +1,29 @@
 "use client";
 
-import { Tab, Tabs } from "@heroui/react";
+import { Card, CardBody, Tab, Tabs } from "@heroui/react";
 import { SVGProps } from "react";
 
 export default function TabProfileSection() {
   return (
-    <div className="flex w-full flex-col">
-      <Tabs aria-label="Options" color="primary" variant="bordered">
-        <Tab
-          key="photos"
-          title={
-            <div className="flex items-center space-x-2">
-              <GalleryIcon />
-              <span>Photos</span>
-            </div>
-          }
-        />
-        <Tab
-          key="music"
-          title={
-            <div className="flex items-center space-x-2">
-              <MusicIcon />
-              <span>Music</span>
-            </div>
-          }
-        />
-        <Tab
-          key="videos"
-          title={
-            <div className="flex items-center space-x-2">
-              <VideoIcon />
-              <span>Videos</span>
-            </div>
-          }
-        />
-      </Tabs>
-    </div>
+    <Card className="bg-background/60 backdrop-blur-md border-divider">
+      <CardBody className="p-2">
+        <Tabs
+          aria-label="Profile sections"
+          classNames={{
+            tabList: "gap-0 w-full relative rounded-none p-0",
+            cursor: "w-full bg-primary",
+            tab: "max-w-fit px-6 h-10",
+            tabContent: "group-data-[selected=true]:text-primary-foreground",
+          }}
+          color="primary"
+          variant="light"
+        >
+          <Tab key="posts" title="Posts" />
+          <Tab key="media" title="Media" />
+          <Tab key="likes" title="Likes" />
+        </Tabs>
+      </CardBody>
+    </Card>
   );
 }
 

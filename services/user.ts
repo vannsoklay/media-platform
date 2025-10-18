@@ -3,6 +3,15 @@ import { handleError } from "@/utils/error";
 
 export const UserService = {
   getUser: () => api.get(`/user`).catch(handleError),
+  getUserByDetail: (username: string, current_user_id: string | null) =>
+    api
+      .get(`/user/detail`, {
+        params: {
+          username,
+          current_user_id,
+        },
+      })
+      .catch(handleError),
 
   login: (values: any) => api.post(`/auth/login`, values).catch(handleError),
   register: (values: any) =>

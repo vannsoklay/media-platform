@@ -7,15 +7,15 @@ import _ from "lodash";
 import { useRouter } from "next/navigation";
 
 import PostForm from "./PostForm";
+import { GridPostItem } from "./GridPostItem";
 
 import { usePost } from "@/hooks/usePost";
 import { useAuth } from "@/contexts/useAuth";
-import { PostItem } from "@/components/PostItem";
 import { AspectRatioType } from "@/types/posts";
 import { PostSkeleton } from "@/components/PostSkeleton";
 import { VoteService } from "@/services/vote";
 
-const PostList = ({
+const PostGrid = ({
   username,
   isPrivate = false,
 }: {
@@ -240,10 +240,12 @@ const PostList = ({
   }
 
   return (
-    <div className="max-w-sm sm:max-w-md lg:max-w-lg mx-auto bg-white">
-      <PostForm isEdit={isEdit} setIsEdit={setIsEdit} />
+    <div className="w-full max-w-2xl">
+      <div className="max-w-2xl mx-auto">
+        <PostForm isEdit={isEdit} setIsEdit={setIsEdit} />
+      </div>
       {isFetching && data?.pages.flat().length === 0 ? (
-        <div className="space-y-0 px-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {[1, 2, 3].map((item) => (
             <PostSkeleton key={item} />
           ))}
@@ -252,7 +254,7 @@ const PostList = ({
         <InfiniteScroll
           dataLength={data?.pages.flat().length ?? 0}
           endMessage={
-            (data?.pages.flat() || []).length > 0 && (
+            (data?.pages.flat() || []).length > 10 && (
               <div className="text-center py-8 text-gray-500 text-sm">
                 <p>You&#39;re all caught up! 🎉</p>
               </div>
@@ -260,7 +262,7 @@ const PostList = ({
           }
           hasMore={hasNextPage}
           loader={
-            <div className="space-y-0 px-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {[1, 2, 3].map((item) => (
                 <PostSkeleton key={item} />
               ))}
@@ -272,10 +274,10 @@ const PostList = ({
             }
           }}
         >
-          <div className="space-y-0 px-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
             {data?.pages.flat().map((post, index) => (
               <div key={index}>
-                <PostItem
+                <GridPostItem
                   currentUserId={user?.id}
                   imageAspectRatios={imageAspectRatios}
                   isLiked={likedPosts.has(post.permalink)}
@@ -302,4 +304,4 @@ const PostList = ({
   );
 };
 
-export default PostList;
+export default PostGrid;

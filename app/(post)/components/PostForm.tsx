@@ -32,7 +32,7 @@ interface Props {
 
 export default function PostForm({ isEdit, setIsEdit }: Props) {
   const { isPostModalOpen, setIsPostModalOpen } = useAuth();
-  const { createPost, editPost, getPostById } = usePost();
+  const { createPost, editPost, usePostById } = usePost();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
 
-  const { data: post } = getPostById(isEdit || "");
+  const { data: post } = usePostById(isEdit || "");
   const dataEdit = post?.data ?? {};
 
   const isEditing = _.isBoolean(isEdit && isEdit === dataEdit._id);

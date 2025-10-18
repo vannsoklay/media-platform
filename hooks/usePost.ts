@@ -11,24 +11,22 @@ export const usePost = () => {
   const limit = 10;
   const queryClient = useQueryClient();
 
-  const getPosts = ({
-    author,
+  const usePosts = ({
     username,
-    isAuth,
+    current_user_id,
   }: {
-    author?: string;
     username?: string;
-    isAuth: boolean;
+    current_user_id: string | null;
   }) => {
     return useInfiniteQuery({
-      queryKey: ["posts", username, author],
+      queryKey: ["posts", username, current_user_id],
       queryFn: async ({ pageParam }) => {
         try {
           const response = await PostService.getAll(
             pageParam * limit,
             limit,
             username,
-            author
+            current_user_id,
           );
 
           return response.data?.data || [];
@@ -37,7 +35,7 @@ export const usePost = () => {
             return [];
           }
           throw new Error(
-            err.response?.data?.message || "Failed to load posts."
+            err.response?.data?.message || "Failed to load posts.",
           );
         }
       },
@@ -47,11 +45,11 @@ export const usePost = () => {
       },
       staleTime: 1000 * 60 * 5,
       refetchOnWindowFocus: false,
-      enabled: isAuth ? !!username || !!author : true,
+      enabled: true,
     });
   };
 
-  const getPostById = (id: string) => {
+  const usePostById = (id: string) => {
     return useQuery({
       queryKey: ["post", id],
       queryFn: async () => {
@@ -65,7 +63,7 @@ export const usePost = () => {
     });
   };
 
-  const getPostByPermalink = (permalink: string) => {
+  const usePostByPermalink = (permalink: string) => {
     return useQuery({
       queryKey: ["post", permalink],
       queryFn: async () => {
@@ -115,8 +113,8 @@ export const usePost = () => {
     createPost,
     editPost,
     deletePost,
-    getPostById,
-    getPostByPermalink,
-    getPosts,
+    usePostById,
+    usePostByPermalink,
+    usePosts,
   };
 };

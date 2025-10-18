@@ -202,8 +202,8 @@ const CommentsSkeleton = () => (
 );
 
 export const DetailProvider: React.FC<DetailProps> = ({ permalink }) => {
-  const { getPostByPermalink } = usePost();
-  const { data } = getPostByPermalink(permalink);
+  const { usePostByPermalink } = usePost();
+  const { data } = usePostByPermalink(permalink);
 
   return (
     <div className="min-h-screen bg-background py-6 px-4">
