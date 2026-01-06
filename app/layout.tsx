@@ -31,14 +31,14 @@ export default function RootLayout({
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
+          fontSans.variable
         )}
       >
         <AuthProvider>
           <Providers>
             <div className="relative flex flex-col h-screen">
               <Navbar />
-              <main className="container mx-auto max-w-7xl px-6 flex-grow">
+              <main className="container mx-auto max-w-7xl px-6 flex-grow mt-4">
                 {children}
               </main>
             </div>

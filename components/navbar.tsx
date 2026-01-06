@@ -24,7 +24,7 @@ export const Navbar = () => {
   } = useAuth();
 
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky">
+    <HeroUINavbar isBordered maxWidth="xl" position="sticky">
       {/* Navbar left side - brand */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand>

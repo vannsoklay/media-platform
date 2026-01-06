@@ -45,7 +45,7 @@ export const ButtonFollow = ({
 
   return (
     followerId != followingId && (
-      <Button variant="solid" onPress={handleFollow}>
+      <Button size="sm" variant="solid" onPress={handleFollow}>
         {isFollow ? "Following" : "Follow"}
       </Button>
     )

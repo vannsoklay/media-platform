@@ -11,23 +11,25 @@ export type AuthContextType = {
   login: (values: LoginForm) => Promise<void>;
   register: (values: RegisterForm) => Promise<void>;
   logout: () => void;
-  isLoginModalOpen: boolean,
-  setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  isLoginModalOpen: boolean;
+  setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isPostModalOpen: boolean;
   setIsPostModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  error: null | any
+  error: null | any;
 };
 
 export type LoginForm = {
-  username: string,
-  password: string
-}
+  contact: string;
+  password: string;
+  type: "EMAIL";
+};
 
 export type RegisterForm = {
-  username: string,
-  password: string
-}
-
+  email: string;
+  username: string;
+  name: string;
+  password: string;
+};
 
 // Define types for the comment data you get from useComment hook
 export interface CommentResult {

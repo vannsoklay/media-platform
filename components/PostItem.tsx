@@ -30,7 +30,7 @@ interface PostItemProps {
   onAspectRatioChange: (
     postId: string,
     imageIndex: number,
-    aspectRatio: AspectRatioType,
+    aspectRatio: AspectRatioType
   ) => void;
 }
 
@@ -62,11 +62,6 @@ export const PostItem: React.FC<PostItemProps> = ({
 
   return (
     <div className="bg-white border-b border-gray-100 py-8">
-      <ButtonFollow
-        followerId={user?.id}
-        followingId={post.author.id}
-        isFollow={post.followed_by_user}
-      />
       <PostHeader
         currentUserId={currentUserId}
         hasMedia={hasMedia}

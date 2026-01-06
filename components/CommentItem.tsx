@@ -61,7 +61,7 @@ export const CommentItem: React.FC<CommentItemProps> = ({
   return (
     <div className="flex items-start space-x-3 p-3 border-b border-gray-100 last:border-b-0 group relative">
       <div className="flex-shrink-0">
-        <Link href={`/profile/${comment.author.username}`}>
+        <Link href={`/profile/${comment?.author?.username}`}>
           {comment.author.avatar ? (
             <Image
               alt={comment.author.username}
@@ -83,8 +83,8 @@ export const CommentItem: React.FC<CommentItemProps> = ({
             className="font-semibold text-sm text-gray-800 hover:underline"
             href={`/${comment.author.username}`}
           >
-            {comment.author.username}
-            {comment.author.is_verified && (
+            {comment?.author.username}
+            {comment?.author.is_verified && (
               <span className="ml-1 text-blue-500" title="Verified">
                 ✓
               </span>
@@ -93,11 +93,11 @@ export const CommentItem: React.FC<CommentItemProps> = ({
           <span className="text-gray-500 text-xs">· {timeAgo}</span>
         </div>
         <p className="text-gray-700 text-sm mt-1 break-words">
-          {comment.content}
+          {comment?.content}
         </p>
       </div>
       {/* NextUI Popover for actions */}
-      {user?.id === comment.author.id && (
+      {user?.id === comment?.author.id && (
         <div className="ml-auto flex items-center">
           <Popover placement="bottom-end">
             <PopoverTrigger>

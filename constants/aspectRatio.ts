@@ -1,5 +1,6 @@
-import { AspectRatioOption } from "@/types/posts";
 import { Maximize2, Square, Smartphone, Monitor } from "lucide-react";
+
+import { AspectRatioOption } from "@/types/posts";
 
 export const aspectRatioOptions: AspectRatioOption[] = [
   {
@@ -36,5 +37,5 @@ export const aspectRatioOptions: AspectRatioOption[] = [
     icon: Smartphone,
     ratio: "9/16",
     objectFit: "cover",
-  }
+  },
 ];

@@ -24,7 +24,7 @@ export default function AuthModal() {
 
     try {
       if (mode === "login") {
-        await login(data as LoginForm);
+        await login({ ...data, type: "EMAIL" } as LoginForm);
         setMessage("Login successful!");
         setTimeout(() => {
           setIsLoginModalOpen(false);
@@ -52,14 +52,42 @@ export default function AuthModal() {
             </ModalHeader>
             <ModalBody>
               {message && <div className="text-sm text-red-500">{message}</div>}
+              {mode == "register" && (
+                <>
+                  <Input
+                    isRequired
+                    label="Username"
+                    labelPlacement="outside"
+                    name="username"
+                    placeholder="Enter your username"
+                  />
 
-              <Input
-                isRequired
-                label="Username"
-                labelPlacement="outside"
-                name="username"
-                placeholder="Enter your username"
-              />
+                  <Input
+                    isRequired
+                    label="Name"
+                    labelPlacement="outside"
+                    name="name"
+                    placeholder="Enter your name"
+                  />
+                </>
+              )}
+              {mode == "login" ? (
+                <Input
+                  isRequired
+                  label="Email"
+                  labelPlacement="outside"
+                  name="contact"
+                  placeholder="Enter your email"
+                />
+              ) : (
+                <Input
+                  isRequired
+                  label="Email"
+                  labelPlacement="outside"
+                  name="email"
+                  placeholder="Enter your email"
+                />
+              )}
 
               <Input
                 isRequired

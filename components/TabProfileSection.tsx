@@ -5,7 +5,7 @@ import { SVGProps } from "react";
 
 export default function TabProfileSection() {
   return (
-    <Card className="bg-background/60 backdrop-blur-md border-divider">
+    <Card className="bg-background/60 border-divider" shadow="sm">
       <CardBody className="p-2">
         <Tabs
           aria-label="Profile sections"

@@ -23,7 +23,7 @@ interface PostItemProps {
   onAspectRatioChange: (
     postId: string,
     imageIndex: number,
-    aspectRatio: AspectRatioType,
+    aspectRatio: AspectRatioType
   ) => void;
 }
 
@@ -54,54 +54,12 @@ export const GridPostItem: React.FC<PostItemProps> = ({
   };
 
   return (
-    <div className="bg-white border-b border-gray-100">
-      {/* <ButtonFollow
-        followerId={user?.id}
-        followingId={post.author.id}
-        isFollow={post.followed_by_user}
-      /> */}
-      {/* <PostHeader
-        currentUserId={currentUserId}
-        hasMedia={hasMedia}
-        isMenuOpen={isMenuOpen}
-        post={post}
-        onAspectRatioToggle={onAspectRatioToggle}
-        onDelete={onDelete}
-        onEdit={onEdit}
-        onMenuToggle={onMenuToggle}
-      /> */}
-
-      {/* {showAspectSelector && (
-        <AspectRatioSelector
-          imageAspectRatios={imageAspectRatios}
-          post={post}
-          onAspectRatioChange={onAspectRatioChange}
-          onClose={handleCloseAspectSelector}
-        />
-      )} */}
-
+    <div className="bg-white border-b border-gray-100 overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <PostMediaGrid
         id={post?.id}
         imageAspectRatios={imageAspectRatios}
         mediaUrls={post?.media_urls}
       />
-
-      {/* <PostActions
-        isLiked={isLiked}
-        isSaved={isSaved}
-        post={post}
-        setLikedPosts={setLikedPosts}
-        onLike={onLike}
-        onSave={onSave}
-        onToggleComments={onToggleComments}
-      /> */}
-
-      {/* <PostContent post={post} /> */}
-
-      {/* <CommentsSection
-        totalComments={post.total_comments}
-        onToggleVisibility={() => onToggleComments(post.permalink)}
-      /> */}
     </div>
   );
 };

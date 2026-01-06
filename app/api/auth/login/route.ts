@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: data.message,
-        access_token: data.access_token,
-        user: data.user,
+        access_token: data.data.access_token,
+        user: data.data.user,
       },
       {
         status: 200,

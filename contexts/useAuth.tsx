@@ -11,7 +11,7 @@ import { addToast } from "@heroui/react";
 
 import { UserService } from "@/services/user";
 import { UserType } from "@/types/user";
-import { AuthContextType, LoginForm } from "@/types";
+import { AuthContextType, LoginForm, RegisterForm } from "@/types";
 import { api } from "@/config/interceptor";
 import AuthModal from "@/components/modals/auth-modal";
 
@@ -105,7 +105,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   };
 
-  const register = async (values: LoginForm) => {
+  const register = async (values: RegisterForm) => {
     try {
       const data = await UserService.register(values);
 
@@ -156,7 +156,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       setIsLoginModalOpen,
       error,
     }),
-    [user, loading, isPostModalOpen, isLoginModalOpen, error, login, logout],
+    [user, loading, isPostModalOpen, isLoginModalOpen, error, login, logout]
   );
 
   return (

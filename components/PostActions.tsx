@@ -49,11 +49,11 @@ export const PostActions: React.FC<PostActionsProps> = ({
           >
             <MessageCircle className="text-black" size={24} />
           </button>
-          <button className="p-0 m-0 bg-transparent border-none outline-none cursor-pointer">
+          {/* <button className="p-0 m-0 bg-transparent border-none outline-none cursor-pointer">
             <Send className="text-black" size={24} />
-          </button>
+          </button> */}
         </div>
-        <button
+        {/* <button
           className="p-0 m-0 bg-transparent border-none outline-none cursor-pointer"
           onClick={() => onSave(post.permalink)}
         >
@@ -61,7 +61,7 @@ export const PostActions: React.FC<PostActionsProps> = ({
             className={isSaved ? "text-black fill-black" : "text-black"}
             size={24}
           />
-        </button>
+        </button> */}
       </div>
 
       {/* Likes */}

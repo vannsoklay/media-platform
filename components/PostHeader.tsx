@@ -16,6 +16,7 @@ import Link from "next/link";
 
 import { getRelativeTimeString } from "@/utils/date";
 import { Post } from "@/types/posts";
+import { ButtonFollow } from "./ButtonFollow";
 
 interface PostHeaderProps {
   post: Post;
@@ -40,35 +41,42 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
 }) => {
   return (
     <div className="flex items-center justify-between px-0.5 pb-4 py-2">
-      <Link href={`/${post?.author?.username}`}>
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <Avatar
-              className="w-8 h-8 ring-2 ring-gradient-to-r from-purple-500 to-pink-500 ring-offset-2"
-              name={post.author?.username?.charAt(0).toUpperCase() ?? "?"}
-              radius="full"
-              size="sm"
-              src={post.author?.avatar || undefined}
-            />
-          </div>
-          <div className="flex items-center gap-1">
+      <div className="flex items-center gap-3">
+        <div className="relative">
+          <Avatar
+            className="w-8 h-8 ring-2 ring-gradient-to-r from-purple-500 to-pink-500 ring-offset-2"
+            name={post.author?.username?.charAt(0).toUpperCase() ?? "?"}
+            radius="full"
+            size="sm"
+            src={post.author?.avatar || undefined}
+          />
+        </div>
+        <div className="flex items-center gap-1">
+          <Link href={`/${post?.author?.username}`}>
             <span className="font-semibold text-sm text-black">
               {post.author?.username || "unknown"}
             </span>
-            <span className="text-gray-500 text-sm">•</span>
-            <span className="text-gray-500 text-sm">
-              {getRelativeTimeString(new Date(post.created_at ?? ""))}
-            </span>
-            {new Date(post.updated_at ?? "") >
-              new Date(post.created_at ?? "") && (
-              <span className="text-gray-400 text-xs">• edited</span>
-            )}
-          </div>
+          </Link>
+          <span className="text-gray-500 text-sm">•</span>
+          <span className="text-gray-500 text-sm">
+            {getRelativeTimeString(new Date(post.created_at ?? ""))}
+          </span>
+          {new Date(post.updated_at ?? "") >
+            new Date(post.created_at ?? "") && (
+            <span className="text-gray-400 text-xs">• edited</span>
+          )}
         </div>
-      </Link>
+        <div>
+          <ButtonFollow
+            followerId={currentUserId}
+            followingId={post?.author?.id}
+            isFollow={post.followed_by_user}
+          />
+        </div>
+      </div>
 
       <div className="flex items-center gap-1">
-        {hasMedia && (
+        {/* {hasMedia && (
           <Button
             isIconOnly
             className="text-gray-500 hover:text-gray-700"
@@ -78,7 +86,7 @@ export const PostHeader: React.FC<PostHeaderProps> = ({
           >
             <AspectRatio size={16} />
           </Button>
-        )}
+        )} */}
 
         {currentUserId === post.author?.id ? (
           <Popover

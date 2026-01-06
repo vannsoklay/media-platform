@@ -2,6 +2,7 @@
 
 import { Avatar, Card, CardBody, Button, Chip } from "@heroui/react";
 import { Calendar, MoreHorizontal, CheckCircle } from "lucide-react";
+import dayjs from "dayjs";
 
 import { useUser } from "@/hooks/useUser";
 import { UserType } from "@/types/user";
@@ -39,19 +40,17 @@ export function UserProfile({ username, user }: UserProfileProps) {
   return (
     <>
       {/* Header Section */}
-      <Card className="bg-background/60 backdrop-blur-md border-divider">
+      <Card className="bg-white border-divider" shadow="sm">
         <CardBody className="p-8">
           <div className="flex flex-col sm:flex-row gap-6 items-start">
             {/* Avatar */}
             <div className="relative">
               <Avatar
+                showFallback
                 alt={data.user.username}
-                className="w-24 h-24 ring-2 ring-primary/20"
-                fallback={data.user.username
-                  .split(" ")
-                  .map((n: any) => n[0])
-                  .join("")}
                 src={data.user.avatar || "/placeholder.svg"}
+                size="lg"
+                name={data?.user?.name}
               />
               {data.user.is_verified && (
                 <div className="absolute -bottom-1 -right-1">
@@ -65,10 +64,10 @@ export function UserProfile({ username, user }: UserProfileProps) {
               <div className="space-y-2">
                 <div className="flex items-center gap-3 flex-wrap">
                   <h1 className="text-2xl font-bold text-foreground">
-                    {data.username}
+                    {data?.user?.name}
                   </h1>
                   <Chip color="default" size="sm" variant="flat">
-                    @{data.user.username}
+                    @{data?.user?.username}
                   </Chip>
                 </div>
                 <p className="text-default-600 leading-relaxed">
@@ -80,7 +79,9 @@ export function UserProfile({ username, user }: UserProfileProps) {
               <div className="flex flex-wrap gap-4 text-sm text-default-500">
                 <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  <span>Joined {data.user.created_at}</span>
+                  <span>
+                    Joined {dayjs(data?.user?.created).format("YYYY-MM-DD")}
+                  </span>
                 </div>
               </div>
             </div>
@@ -106,7 +107,7 @@ export function UserProfile({ username, user }: UserProfileProps) {
       </Card>
 
       {/* Stats Section */}
-      <Card className="bg-background/60 backdrop-blur-md border-divider">
+      <Card className="bg-background/60 border-divider" shadow="sm">
         <CardBody className="p-6">
           <div className="grid grid-cols-3 gap-6">
             <div className="text-center space-y-1">

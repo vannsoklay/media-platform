@@ -119,6 +119,9 @@ export default function PostForm({ isEdit, setIsEdit }: Props) {
 
           formData.append("image", image);
 
+          console.log("formData", formData);
+          
+
           const { data } = await ImageService.create(formData);
 
           if (!data?.fileUrl) {
